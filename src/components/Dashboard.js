@@ -4,6 +4,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import StarIcon from '@mui/icons-material/Star';
+import IconButton from '@mui/material/IconButton';
 import { ReactComponent as MapIcon } from '../assets/map.svg';
 import { ReactComponent as DiagramIcon } from '../assets/diagram.svg';
 import { ReactComponent as TableIcon } from '../assets/table.svg';
@@ -13,6 +15,7 @@ import { ReactComponent as StatisticsIcon } from '../assets/statistics.svg';
 
 const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
+  const [isStarred, setIsStarred] = useState(dashboard.starred);
 
   useEffect(() => {
     // Fetch specific dashboard details when expanded
@@ -42,6 +45,12 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
 
   const handleAccordionChange = () => {
     onDashboardClick(dashboard.id);
+  };
+
+  const handleStarClick = () => {
+    // Toggle the starred state
+    setIsStarred((prevIsStarred) => !prevIsStarred);
+    // You can add logic to update the backend with the starred state
   };
 
   // Render individual dashboard item content with checks
@@ -95,8 +104,16 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
-        id="panel1a-header">
-        <Typography>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+        id="panel1a-header"
+        style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Typography>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <IconButton onClick={handleStarClick}>
+            <StarIcon color={isStarred ? 'primary' : 'inherit'} />
+          </IconButton>
+        </div>
       </AccordionSummary>
       <AccordionDetails>
         {renderDashboardItems()}
