@@ -33,10 +33,30 @@ const Dashboard = ({ dashboard }) => {
         })
         .catch((error) => console.error('Error fetching dashboard details:', error));
     }
-  }, [expanded, dashboard]);
+  }, [expanded, dashboard, dashboardDetails]);
+
+  // Render individual dashboard item content with checks
+  const renderDashboardItems = () => {
+    if (dashboardDetails && dashboardDetails.dashboardItems) {
+      return dashboardDetails.dashboardItems.map((item) => (
+        <div key={item.id}>
+          {item.visualization && item.visualization.name && (
+            <Typography>{item.visualization.name}</Typography>
+          )}
+          {item.map && item.map.name && (
+            <Typography>{item.map.name}</Typography>
+          )}
+          {/* Add similar checks for other item types */}
+        </div>
+      ));
+    } else {
+      return <Typography>Loading...</Typography>;
+    }
+  };
   const handleAccordionChange = () => {
     setExpanded(!expanded);
   };
+  console.log('Dashboard details:', dashboardDetails)
 
   return (
     <Accordion expanded={expanded} onChange={handleAccordionChange}>
@@ -47,17 +67,7 @@ const Dashboard = ({ dashboard }) => {
         <Typography>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {dashboardDetails ? (
-          dashboardDetails.dashboardItems.map((item) => (
-            <div key={item.id}>
-              {/* Render individual dashboard item content */}
-              {/* You can use item.type to determine the type and render accordingly */}
-              <Typography>{item.visualization.name}</Typography>
-            </div>
-          ))
-        ) : (
-          <Typography>Loading...</Typography>
-        )}
+        {renderDashboardItems()}
       </AccordionDetails>
     </Accordion>
   );
