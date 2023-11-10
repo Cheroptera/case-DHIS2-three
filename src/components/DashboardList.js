@@ -3,6 +3,7 @@ import Dashboard from './Dashboard'; // Adjust the path accordingly
 
 const DashboardList = () => {
   const [dashboards, setDashboards] = useState([]);
+  const [expandedDashboardId, setExpandedDashboardId] = useState(null);
 
   useEffect(() => {
     // Fetch the list of dashboards
@@ -11,10 +12,27 @@ const DashboardList = () => {
       .then((data) => setDashboards(data.dashboards))
       .catch((error) => console.error('Error fetching dashboards:', error));
   }, []); // Empty dependency array to run the effect only once on mount
+
+  // Expand the first dashboard by default
+  useEffect(() => {
+    if (dashboards && dashboards.length > 0) {
+      setExpandedDashboardId(dashboards[0].id);
+    }
+  }, [dashboards]);
+
+  // Toggle the expanded dashboard ID when clicking on a dashboard
+  const handleDashboardClick = (dashboardId) => {
+    setExpandedDashboardId((prevId) => (prevId === dashboardId ? null : dashboardId));
+  };
+
   return (
     <div>
       {dashboards.map((dashboard) => (
-        <Dashboard key={dashboard.id} dashboard={dashboard} />
+        <Dashboard
+          key={dashboard.id}
+          dashboard={dashboard}
+          isExpanded={dashboard.id === expandedDashboardId}
+          onDashboardClick={handleDashboardClick} />
       ))}
     </div>
   );
