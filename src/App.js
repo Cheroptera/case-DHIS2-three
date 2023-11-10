@@ -1,9 +1,11 @@
 import React from 'react'
+import DashboardList from 'components/DashboardList'
+import { StyledEngineProvider } from '@mui/material'
 
 export const App = () => {
   return (
-    <div>
-      Find me in src/app.js!
-    </div>
+    <StyledEngineProvider injectFirst>
+      <DashboardList />
+    </StyledEngineProvider>
   )
 }
