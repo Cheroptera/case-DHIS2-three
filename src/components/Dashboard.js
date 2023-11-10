@@ -12,13 +12,28 @@ const Dashboard = ({ dashboard }) => {
   useEffect(() => {
     // Fetch specific dashboard details when expanded
     if (expanded && dashboard && dashboard.id) {
-      fetch(`https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/${dashboard.id}.json`)
-        .then((response) => response.json())
-        .then((data) => setDashboardDetails(data))
+      const url = `https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/${dashboard.id}.json`;
+
+      console.log('Fetching dashboard details for URL:', url);
+
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Fetched dashboard details successfully:', data);
+          if (data && data.dashboardItems) {
+            setDashboardDetails(data);
+          } else {
+            console.error('Invalid dashboard details format:', data);
+          }
+        })
         .catch((error) => console.error('Error fetching dashboard details:', error));
     }
-  }, [expanded, dashboard]); // Dependency array includes expanded state and dashboard
-
+  }, [expanded, dashboard]);
   const handleAccordionChange = () => {
     setExpanded(!expanded);
   };
