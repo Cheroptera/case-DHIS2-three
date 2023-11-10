@@ -1,0 +1,29 @@
+{
+  "dashboards": [
+    {
+      "displayName": "Antenatal Care",
+      "id": "nghVC4wtyzi",
+      "starred": true
+    },
+    {
+      "displayName": "Cases Malaria",
+      "id": "JW7RlN5xafN",
+      "starred": false
+    },
+    {
+      "displayName": "Delivery",
+      "id": "iMnYyBfSxmM",
+      "starred": false
+    },
+    {
+      "displayName": "Disease Surveillance",
+      "id": "vqh4MBWOTi4",
+      "starred": false
+    },
+    {
+      "displayName": "Immunization",
+      "id": "TAMlzYkstb7",
+      "starred": false
+    }
+  ]
+}
