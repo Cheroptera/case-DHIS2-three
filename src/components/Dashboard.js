@@ -7,11 +7,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import IconButton from '@mui/material/IconButton';
 import { ReactComponent as MapIcon } from '../assets/map.svg';
-import { ReactComponent as DiagramIcon } from '../assets/diagram.svg';
-import { ReactComponent as TableIcon } from '../assets/table.svg';
 import { ReactComponent as DataVisIcon } from '../assets/data-visualization.svg';
 import { ReactComponent as TextIcon } from '../assets/text.svg';
-import { ReactComponent as StatisticsIcon } from '../assets/statistics.svg';
 
 const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
@@ -59,25 +56,13 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
       return dashboardDetails.dashboardItems.map((item) => (
         <div key={item.id} style={{ display: 'flex', alignItems: 'center' }}>
           {/* Conditional rendering based on item type */}
-          {item.visualization && item.visualization.type === 'COLUMN' && (
-            <DiagramIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.visualization && item.visualization.type === 'PIVOT_TABLE' && (
-            <TableIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.visualization && item.visualization.type === 'TEXT' && (
+          {item.type === 'TEXT' && (
             <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
           )}
-          {item.visualization && item.visualization.type === 'MAP' && (
+          {item.type === 'MAP' && (
             <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
           )}
-          {item.visualization && item.visualization.type === 'STACKED_COLUMN' && (
-            <StatisticsIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.visualization && item.visualization.type === 'PIE' && (
-            <StatisticsIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.visualization && item.visualization.type === 'VISUALIZATION' && (
+          {item.type === 'VISUALIZATION' && (
             <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
           )}
           {/* Add similar checks for other item types */}
