@@ -70,11 +70,12 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
               <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
             )}
             <div>
+              {/* Split after colon and only render second part of array */}
               {item.visualization && item.visualization.name && (
-                <Typography>{item.visualization.name}</Typography>
+                <Typography>{item.visualization.name.split(':')[1]}</Typography>
               )}
               {item.map && item.map.name && (
-                <Typography>{item.map.name}</Typography>
+                <Typography>{item.map.name.split(':')[1]}</Typography>
               )}
             </div>
           </div>
@@ -89,16 +90,15 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   console.log('Dashboard details:', dashboardDetails);
 
   return (
-    <Accordion style={{ width: '50%' }} expanded={isExpanded} onChange={handleAccordionChange}>
+    <Accordion style={{ width: '50%', border: '1px solid green' }} expanded={isExpanded}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Add onClick handler here
         aria-controls="panel1a-content"
-        id="panel1a-header"
-        style={{ display: 'flex', height: '80px', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography style={{ fontSize: '24px' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+        id="panel1a-header">
+        <div>
+          <Typography style={{ fontSize: '24px', color: 'hotpink' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <div className="StarIconBtn">
           <IconButton onClick={handleStarClick}>
             <StarIcon color={isStarred ? 'primary' : 'inherit'} />
           </IconButton>
