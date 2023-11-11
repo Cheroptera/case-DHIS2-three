@@ -1,8 +1,7 @@
 {
   "extends": [
     "airbnb",
-    "eslint:recommended",
-    "google"
+    "eslint:recommended"
   ],
   "globals": {
     "document": true,

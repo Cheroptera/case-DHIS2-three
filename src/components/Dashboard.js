@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -6,13 +7,14 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
 import { ReactComponent as MapIcon } from '../assets/map.svg';
 import { ReactComponent as DataVisIcon } from '../assets/data-visualization.svg';
 import { ReactComponent as TextIcon } from '../assets/text.svg';
 
 const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
-  const [isStarred, setIsStarred] = useState(dashboard.starred);
+  const [isStarred, setIsStarred] = useState(false);
 
   useEffect(() => {
     // Fetch specific dashboard details when expanded and details are not already fetched
@@ -54,29 +56,30 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   // Render individual dashboard item content with checks
   const renderDashboardItems = () => {
     if (dashboardDetails && dashboardDetails.dashboardItems) {
-      return dashboardDetails.dashboardItems.map((item) => (
-        <div key={item.id} style={{ display: 'flex', alignItems: 'center' }}>
-          {/* Conditional rendering based on item type */}
-          {item.type === 'TEXT' && (
-            <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.type === 'MAP' && (
-            <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {item.type === 'VISUALIZATION' && (
-            <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
-          )}
-          {/* Everything in the second part of the array is rendered */}
-          <div>
-            {item.visualization && item.visualization.name && (
-              <Typography>{item.visualization.name.split(':')[1]}</Typography>
+      return dashboardDetails.dashboardItems.map((item, index, array) => (
+        <React.Fragment key={item.id}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {/* Conditional rendering based on item type */}
+            {item.type === 'TEXT' && (
+              <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
             )}
-            {item.map && item.map.name && (
-              <Typography>{item.map.name.split(':')[1]}</Typography>
+            {item.type === 'MAP' && (
+              <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
             )}
-            {/* Add similar checks for other item types */}
+            {item.type === 'VISUALIZATION' && (
+              <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
+            )}
+            <div>
+              {item.visualization && item.visualization.name && (
+                <Typography>{item.visualization.name}</Typography>
+              )}
+              {item.map && item.map.name && (
+                <Typography>{item.map.name}</Typography>
+              )}
+            </div>
           </div>
-        </div>
+          {index < array.length - 1 && <Divider />} {/* Add Divider for all items except the last one */}
+        </React.Fragment>
       ));
     } else {
       return <Typography>Loading...</Typography>;
@@ -86,14 +89,14 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   console.log('Dashboard details:', dashboardDetails);
 
   return (
-    <Accordion expanded={isExpanded} onChange={handleAccordionChange}>
+    <Accordion style={{ width: '50%' }} expanded={isExpanded} onChange={handleAccordionChange}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
-        style={{ display: 'flex', justifyContent: 'space-between' }}>
+        style={{ display: 'flex', height: '80px', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+          <Typography style={{ fontSize: '24px' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <IconButton onClick={handleStarClick}>
