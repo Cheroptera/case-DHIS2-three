@@ -15,8 +15,8 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const [isStarred, setIsStarred] = useState(dashboard.starred);
 
   useEffect(() => {
-    // Fetch specific dashboard details when expanded
-    if (isExpanded && dashboard && dashboard.id) {
+    // Fetch specific dashboard details when expanded and details are not already fetched
+    if (isExpanded && dashboard && dashboard.id && !dashboardDetails) {
       const url = `https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/${dashboard.id}.json`;
 
       console.log('Fetching dashboard details for URL:', url);
@@ -38,8 +38,9 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
         })
         .catch((error) => console.error('Error fetching dashboard details:', error));
     }
-  }, [isExpanded, dashboard]);
+  }, [isExpanded, dashboard, dashboardDetails]);
 
+  // Toggle the expanded state when clicking on the accordion
   const handleAccordionChange = () => {
     onDashboardClick(dashboard.id);
   };
@@ -65,13 +66,13 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
           {item.type === 'VISUALIZATION' && (
             <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
           )}
-          {/* Add similar checks for other item types */}
+          {/* Everything in the second part of the array is rendered */}
           <div>
             {item.visualization && item.visualization.name && (
-              <Typography>{item.visualization.name}</Typography>
+              <Typography>{item.visualization.name.split(':')[1]}</Typography>
             )}
             {item.map && item.map.name && (
-              <Typography>{item.map.name}</Typography>
+              <Typography>{item.map.name.split(':')[1]}</Typography>
             )}
             {/* Add similar checks for other item types */}
           </div>
