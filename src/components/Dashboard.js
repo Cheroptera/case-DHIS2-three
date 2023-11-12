@@ -67,32 +67,39 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   // Render individual dashboard item content with checks
   const renderDashboardItems = () => {
     if (dashboardDetails && dashboardDetails.dashboardItems) {
-      return dashboardDetails.dashboardItems.map((item, index, array) => (
-        <React.Fragment key={item.id}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Conditional rendering based on item type */}
-            {item.type === 'TEXT' && item.visualization && (
-              <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
-            )}
-            {item.type === 'MAP' && (
-              <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
-            )}
-            {item.type === 'VISUALIZATION' && (
-              <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
-            )}
-            <div>
-              {/* Split after colon and only render second part of array */}
-              {item.visualization && item.visualization.name && (
-                <Typography>{item.visualization.name.split(':')[1]}</Typography>
+      return dashboardDetails.dashboardItems.map((item, index, array) => {
+        console.log('Rendering item:', item);
+
+        const itemName = (item.visualization && item.visualization.name)
+          || (item.map && item.map.name)
+          || 'Unnamed Item';
+
+        // Split the itemName only if it contains a colon
+        const splitName = itemName.includes(':') ? itemName.split(':') : [itemName];
+
+        console.log('Rendered item name:', splitName[1]);
+
+        return (
+          <React.Fragment key={item.id}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {/* Conditional rendering based on item type */}
+              {item.type === 'TEXT' && item.visualization && (
+                <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
               )}
-              {item.map && item.map.name && (
-                <Typography>{item.map.name.split(':')[1]}</Typography>
+              {item.type === 'MAP' && (
+                <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
               )}
+              {item.type === 'VISUALIZATION' && (
+                <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
+              )}
+              <div>
+                <Typography>{splitName[1] || splitName[0]}</Typography>
+              </div>
             </div>
-          </div>
-          {index < array.length - 1 && <Divider />} {/* Add Divider for all items except the last one */}
-        </React.Fragment>
-      ));
+            {index < array.length - 1 && <Divider />} {/* Add Divider for all items except the last one */}
+          </React.Fragment>
+        );
+      });
     } else {
       return <Typography>Loading...</Typography>;
     }
@@ -102,7 +109,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
 
   return (
     <Box id="accordion-container">
-      <Accordion style={{ width: '100%', border: '1px solid green' }} expanded={isExpanded}>
+      <Accordion style={{ width: '100%' }} expanded={isExpanded}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Making sure the accordion is expanded when clicking on the expand icon
           aria-controls="panel1a-content"
