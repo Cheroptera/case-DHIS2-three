@@ -32,10 +32,6 @@ code {
   align-items: center;
 }
 
-header h1 {
-  justify-content: start;
-}
-
 #accordion-container {
   display: flex; 
   flex-direction: column;

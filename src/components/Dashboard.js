@@ -66,7 +66,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
     if (dashboardDetails && dashboardDetails.dashboardItems) {
       return dashboardDetails.dashboardItems.map((item, index, array) => {
         // Check if there is either item.map.name or item.visualization.name
-        if (!(item.map && item.map.name) && !(item.visualization && item.visualization.name)) {
+        if (!(item.map && item.map.name) && !(item.visualization && item.visualization.name) && !(item.text)) {
           return null; // Skip rendering if both are missing
         }
 
@@ -81,6 +81,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
 
         // Split after colon and only render second part of array
         const splitResult = displayedName.split(':');
+
         const renderedText = splitResult.length > 1 ? splitResult[1].trim() : displayedName;
 
         return (
