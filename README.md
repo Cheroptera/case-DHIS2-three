@@ -1,4 +1,5 @@
-# Frontend Task - Build a React app that fetches and renders the list of dashboards available to a user
+# Frontend Task 
+## - Build a React app that fetches and renders the list of dashboards available to a user
 
 ## The process and obstacles on the way
 I have to be honest and say that I overcomplicated things at first and had to start over a couple of times. The first times I tried making the collapsible cards without using any libraries and spent way too much time on the styling and never got the functionality to work properly. I also had some problems with the API and couldn't render the data I expected. After adding a lot of console logs to analyze where it went wrong, I was finally able to make it work.  
