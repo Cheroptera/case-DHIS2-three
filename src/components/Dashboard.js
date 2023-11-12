@@ -83,8 +83,6 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
         const splitResult = displayedName.split(':');
         const renderedText = splitResult.length > 1 ? splitResult[1].trim() : displayedName;
 
-        console.log('Rendered item name:', renderedText);
-
         return (
           <React.Fragment key={item.id}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -110,8 +108,6 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
       return <Typography>Loading...</Typography>;
     }
   };
-
-  console.log('Dashboard details:', dashboardDetails);
 
   return (
     <Box id="accordion-container">
