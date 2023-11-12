@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
+import { Box } from '@mui/material';
 import { ReactComponent as MapIcon } from '../assets/map.svg';
 import { ReactComponent as DataVisIcon } from '../assets/data-visualization.svg';
 import { ReactComponent as TextIcon } from '../assets/text.svg';
@@ -42,6 +43,14 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
     }
   }, [isExpanded, dashboard, dashboardDetails]);
 
+  useEffect(() => {
+    // Load starred state from local storage
+    const storedStarState = localStorage.getItem(`dashboardStar_${dashboard.id}`);
+    if (storedStarState !== null) {
+      setIsStarred(storedStarState === 'true');
+    }
+  }, [dashboard.id]);
+
   // Toggle the expanded state when clicking on the accordion
   const handleAccordionChange = () => {
     onDashboardClick(dashboard.id);
@@ -49,8 +58,10 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
 
   const handleStarClick = () => {
     // Toggle the starred state
-    setIsStarred((prevIsStarred) => !prevIsStarred);
-    // You can add logic to update the backend with the starred state
+    const newStarState = !isStarred;
+    setIsStarred(newStarState);
+    // Save starred state to local storage
+    localStorage.setItem(`dashboardStar_${dashboard.id}`, newStarState.toString());
   };
 
   // Render individual dashboard item content with checks
@@ -60,7 +71,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
         <React.Fragment key={item.id}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Conditional rendering based on item type */}
-            {item.type === 'TEXT' && (
+            {item.type === 'TEXT' && item.visualization && (
               <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
             )}
             {item.type === 'MAP' && (
@@ -90,24 +101,26 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   console.log('Dashboard details:', dashboardDetails);
 
   return (
-    <Accordion style={{ width: '50%', border: '1px solid green' }} expanded={isExpanded}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Add onClick handler here
-        aria-controls="panel1a-content"
-        id="panel1a-header">
-        <div>
-          <Typography style={{ fontSize: '24px', color: 'hotpink' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
-        </div>
-        <div className="StarIconBtn">
-          <IconButton onClick={handleStarClick}>
-            <StarIcon color={isStarred ? 'primary' : 'inherit'} />
-          </IconButton>
-        </div>
-      </AccordionSummary>
-      <AccordionDetails>
-        {renderDashboardItems()}
-      </AccordionDetails>
-    </Accordion>
+    <Box id="accordion-container">
+      <Accordion style={{ width: '100%', border: '1px solid green' }} expanded={isExpanded}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Making sure the accordion is expanded when clicking on the expand icon
+          aria-controls="panel1a-content"
+          id="panel1a-header">
+          <div>
+            <Typography style={{ fontSize: '1.5rem', color: 'black' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+          </div>
+          <div className="StarIconBtn">
+            <IconButton onClick={handleStarClick}>
+              <StarIcon color={isStarred ? 'primary' : 'inherit'} />
+            </IconButton>
+          </div>
+        </AccordionSummary>
+        <AccordionDetails id="accordionDetails">
+          {renderDashboardItems()}
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   );
 };
 
