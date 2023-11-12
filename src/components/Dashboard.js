@@ -18,7 +18,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const [isStarred, setIsStarred] = useState(false);
 
   useEffect(() => {
-    // Fetch specific dashboard details when expanded and details are not already fetched
+    // Fetches specific dashboard details when expanded and details are not already fetched
     if (isExpanded && dashboard && dashboard.id && !dashboardDetails) {
       const url = `https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/${dashboard.id}.json`;
 
@@ -41,27 +41,27 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   }, [isExpanded, dashboard, dashboardDetails]);
 
   useEffect(() => {
-    // Load starred state from local storage
+    // Loads starred state from local storage
     const storedStarState = localStorage.getItem(`dashboardStar_${dashboard.id}`);
     if (storedStarState !== null) {
       setIsStarred(storedStarState === 'true');
     }
   }, [dashboard.id]);
 
-  // Toggle the expanded state when clicking on the accordion
+  // Toggles the expanded state when clicking on the accordion
   const handleAccordionChange = () => {
     onDashboardClick(dashboard.id);
   };
 
   const handleStarClick = () => {
-    // Toggle the starred state
+    // Toggles the starred state
     const newStarState = !isStarred;
     setIsStarred(newStarState);
-    // Save starred state to local storage
+    // Saves starred state to local storage
     localStorage.setItem(`dashboardStar_${dashboard.id}`, newStarState.toString());
   };
 
-  // Render individual dashboard item content with checks
+  // Renders individual dashboard item content with checks
   const renderDashboardItems = () => {
     if (dashboardDetails && dashboardDetails.dashboardItems) {
       return dashboardDetails.dashboardItems.map((item, index, array) => {
@@ -113,7 +113,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   };
 
   return (
-    <Box id="accordion-container">
+    <Box className="accordion-container">
       <Accordion style={{ width: '100%' }} expanded={isExpanded}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Making sure the accordion is expanded only when clicking on the expand icon
@@ -123,7 +123,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
             <Typography className="item-text">{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
           </div>
           <div className="StarIconBtn">
-            <IconButton onClick={handleStarClick}>
+            <IconButton aria-label="star-icon" onClick={handleStarClick}>
               <StarIcon color={isStarred ? 'primary' : 'inherit'} />
             </IconButton>
           </div>

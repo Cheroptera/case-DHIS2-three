@@ -31,13 +31,7 @@ code {
     monospace;
 }
 
-.header {
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#accordion-container {
+.accordion-container {
   display: flex; 
   flex-direction: column;
   width: 100%;
@@ -56,12 +50,20 @@ code {
   height: 5rem;
 }
 
+.header {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .StarIconBtn {
   display: flex; 
   align-items: center; 
   justify-content: flex-end;
   text-shadow: 0 0 3px #000
 }
+
+/* Styling of rendered lists and their content */
 
 .MuiAccordionSummary-content {
   display: flex;
@@ -87,6 +89,7 @@ code {
 .item-container:hover {
   cursor:pointer;
   background-color: #f5f5f5;
+  transform:scale(1.05);
 }
 .icon {
   margin-right: 8px;
