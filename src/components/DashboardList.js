@@ -27,7 +27,9 @@ const DashboardList = () => {
 
   return (
     <div className="main-wrapper">
-      <h1>Dashboards</h1>
+      <div className="header">
+        <h1>Dashboards</h1>
+      </div>
       {dashboards.map((dashboard) => (
         <Dashboard
           key={dashboard.id}
