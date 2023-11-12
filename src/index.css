@@ -56,11 +56,6 @@ code {
   height: 5rem;
 }
 
-#accordionDetails {
-  color: #4b4949;
-  gap: 30px;
-}
-
 .StarIconBtn {
   display: flex; 
   align-items: center; 
@@ -87,6 +82,11 @@ code {
   display: flex;
   align-items: center;
   height: 4em; 
+}
+
+.item-container:hover {
+  cursor:pointer;
+  background-color: #f5f5f5;
 }
 .icon {
   margin-right: 8px;
