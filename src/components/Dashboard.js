@@ -86,17 +86,19 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
 
         return (
           <React.Fragment key={item.id}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              {/* Conditional rendering based on item type */}
-              {item.type === 'TEXT' && item.text && (
-                <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
-              )}
-              {item.type === 'MAP' && (
-                <MapIcon width={24} height={24} style={{ marginRight: '8px' }} />
-              )}
-              {item.type === 'VISUALIZATION' && (
-                <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
-              )}
+            <div className="item-container">
+              <div className="icon-container">
+                {/* Conditional rendering based on item type */}
+                {item.type === 'TEXT' && item.text && (
+                  <TextIcon width={24} height={24} />
+                )}
+                {item.type === 'MAP' && (
+                  <MapIcon width={24} height={24} />
+                )}
+                {item.type === 'VISUALIZATION' && (
+                  <DataVisIcon width={24} height={24} />
+                )}
+              </div>
               <div>
                 <Typography>{renderedText}</Typography>
               </div>
@@ -118,7 +120,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
           aria-controls="panel1a-content"
           id="panel1a-header">
           <div>
-            <Typography style={{ fontSize: '1.5rem', color: 'black' }}>{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
+            <Typography className="item-text">{dashboard ? dashboard.displayName : 'Loading...'}</Typography>
           </div>
           <div className="StarIconBtn">
             <IconButton onClick={handleStarClick}>
