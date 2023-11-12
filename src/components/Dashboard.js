@@ -68,7 +68,10 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
   const renderDashboardItems = () => {
     if (dashboardDetails && dashboardDetails.dashboardItems) {
       return dashboardDetails.dashboardItems.map((item, index, array) => {
-        console.log('Rendering item:', item);
+        // Check if there is either item.map.name or item.visualization.name
+        if (!(item.map && item.map.name) && !(item.visualization && item.visualization.name)) {
+          return null; // Skip rendering if both are missing
+        }
 
         const itemName = (item.visualization && item.visualization.name)
           || (item.map && item.map.name) || (item.text) || 'Unnamed Item';
@@ -89,9 +92,6 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
           <React.Fragment key={item.id}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               {/* Conditional rendering based on item type */}
-              {item.type === 'MESSAGE' && item.visualization && (
-                <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
-              )}
               {item.type === 'TEXT' && item.text && (
                 <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
               )}
