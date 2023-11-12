@@ -71,19 +71,28 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
         console.log('Rendering item:', item);
 
         const itemName = (item.visualization && item.visualization.name)
-          || (item.map && item.map.name)
-          || 'Unnamed Item';
+          || (item.map && item.map.name) || (item.text) || 'Unnamed Item';
 
-        // Split the itemName only if it contains a colon
-        const splitName = itemName.includes(':') ? itemName.split(':') : [itemName];
+        // Use a regular expression to match the text between '*'
+        const matchResult = itemName.match(/\*(.*?)\*/);
 
-        console.log('Rendered item name:', splitName[1]);
+        // Extract the matched text or use the entire itemName
+        const displayedName = matchResult ? matchResult[1] : itemName;
+
+        // Split after colon and only render second part of array
+        const splitResult = displayedName.split(':');
+        const renderedText = splitResult.length > 1 ? splitResult[1].trim() : displayedName;
+
+        console.log('Rendered item name:', renderedText);
 
         return (
           <React.Fragment key={item.id}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               {/* Conditional rendering based on item type */}
-              {item.type === 'TEXT' && item.visualization && (
+              {item.type === 'MESSAGE' && item.visualization && (
+                <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
+              )}
+              {item.type === 'TEXT' && item.text && (
                 <TextIcon width={24} height={24} style={{ marginRight: '8px' }} />
               )}
               {item.type === 'MAP' && (
@@ -93,7 +102,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
                 <DataVisIcon width={24} height={24} style={{ marginRight: '8px' }} />
               )}
               <div>
-                <Typography>{splitName[1] || splitName[0]}</Typography>
+                <Typography>{renderedText}</Typography>
               </div>
             </div>
             {index < array.length - 1 && <Divider />} {/* Add Divider for all items except the last one */}
