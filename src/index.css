@@ -20,8 +20,10 @@ code {
     monospace;
 }
 
-header {
+.header {
   display:flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
@@ -67,6 +69,6 @@ header h1 {
 }
 
 .MuiTypography-root {
-  line-height: 2.5; 
+  line-height: 3; 
 }
 

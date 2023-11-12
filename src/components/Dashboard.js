@@ -22,8 +22,6 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
     if (isExpanded && dashboard && dashboard.id && !dashboardDetails) {
       const url = `https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/${dashboard.id}.json`;
 
-      console.log('Fetching dashboard details for URL:', url);
-
       fetch(url)
         .then((response) => {
           if (!response.ok) {
@@ -32,7 +30,6 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
           return response.json();
         })
         .then((data) => {
-          console.log('Fetched dashboard details successfully:', data);
           if (data && data.dashboardItems) {
             setDashboardDetails(data);
           } else {
@@ -120,7 +117,7 @@ const Dashboard = ({ dashboard, isExpanded, onDashboardClick }) => {
     <Box id="accordion-container">
       <Accordion style={{ width: '100%' }} expanded={isExpanded}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Making sure the accordion is expanded when clicking on the expand icon
+          expandIcon={<ExpandMoreIcon onClick={handleAccordionChange} />} // Making sure the accordion is expanded only when clicking on the expand icon
           aria-controls="panel1a-content"
           id="panel1a-header">
           <div>
