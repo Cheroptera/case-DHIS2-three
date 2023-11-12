@@ -15,6 +15,12 @@ body {
   justify-content: center;
 }
 
+@media (max-width: 667px) {
+  body {
+  margin: 20px;
+}
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -69,6 +75,8 @@ header h1 {
 }
 
 .MuiTypography-root {
-  line-height: 3; 
+  display:flex;
+  height: 3em; 
+  align-items: center;
 }
 
